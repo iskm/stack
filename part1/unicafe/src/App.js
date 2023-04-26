@@ -8,11 +8,13 @@ const Button = (props) => {
   )
 }
 
-const Display = (props) => {
+const StatisticLine = (props) => {
   return (
     <p>{props.text} {props.count}</p>
   )
 }
+
+
 
 const Statistics = (props) => {
   const good = props.good
@@ -26,12 +28,12 @@ const Statistics = (props) => {
   const positive_percent = (good/total) * 100
   return (
     <>
-    <Display text="good" count={good} />
-    <Display text="neutral" count={bad} />
-    <Display text="bad" count={bad} />
-    <Display text="all" count={total} />
-    <Display text="average" count={average} />
-    <Display text="positive(%)" count={positive_percent} />
+    <StatisticLine text="good" count={good} />
+    <StatisticLine text="neutral" count={bad} />
+    <StatisticLine text="bad" count={bad} />
+    <StatisticLine text="all" count={total} />
+    <StatisticLine text="average" count={average} />
+    <StatisticLine text="positive(%)" count={positive_percent} />
     </>
   )
 }
