@@ -8,12 +8,6 @@ const Button = (props) => {
   )
 }
 
-const Display = (props) => {
-  return (
-    <p>{props.text} {props.count}</p>
-  )
-}
-
 const App = () => {
   const anecdotes = [
       'If it hurts, do it more often.',
@@ -28,6 +22,8 @@ const App = () => {
   ]
 
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+  
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min)
@@ -35,9 +31,17 @@ const App = () => {
     return Math.floor(Math.random() * (max - min) + min)
   }
 
+  const updateVotes = (selected) => {
+    const copy = [...votes]
+    copy[selected] += 1
+    return copy
+  }
+
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>has {votes[selected]} votes</p>
+      <Button onclick={() => {setVotes(updateVotes(selected))}} text="vote" />
       <Button onclick={() => setSelected(getRandomInt(0, anecdotes.length))} text="next anecdote" />
     </div>
   )
