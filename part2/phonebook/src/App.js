@@ -5,7 +5,7 @@ const ShowPerson = (props) => {
   return (
     <ol>
       {persons.map( (person) => {
-        return (<li key={person.id}>{person.name}</li>)
+        return (<li key={person.id}>{person.name} {person.phoneNumber}</li>)
       } )}
     </ol>
   )
@@ -13,9 +13,10 @@ const ShowPerson = (props) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', phoneNumber: '000-000-0000' }
   ])
   const [newName, setNewName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const addContact = (event) => {
     event.preventDefault()
@@ -26,14 +27,19 @@ const App = () => {
       const newPerson = {
         name: newName,
         id: persons.length + 1,
+        phoneNumber: phoneNumber,
       }
     setPersons(persons.concat(newPerson))
   }}
 
   const handleTypedName = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewName(event.target.value)
-    console.log(newName)
+    //console.log(newName)
+  }
+
+  const handlePhoneNo = (event) => {
+    setPhoneNumber(event.target.value)
   }
 
   return (
@@ -41,7 +47,8 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addContact}>
         <div>
-          name: <input value={newName} onChange={handleTypedName} />
+          <p>name: <input value={newName} onChange={handleTypedName} /></p>
+          <p>number: <input value={phoneNumber} onChange={handlePhoneNo} /></p>
         </div>
         <div>
           <button  type="submit">add</button>
