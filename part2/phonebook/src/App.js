@@ -31,19 +31,15 @@ const Filter = (props) => {
 }
 
 const App = () => {
-  //const [persons, setPersons] = useState([
-    //{ name: 'Arto Hellas', number: '000-000-0000', id: 1 },
-    //{ name: 'John F Kennedy', number: '1-800-NASA', id: 2 },
-    //{ name: 'Julius K Nyerere', number: '1-800-UHURU', id: 3 }
-  //])
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [number, setPhoneNumber] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const baseURL = 'http://localhost:3001/persons'
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/persons')
+      .get(baseURL)
       .then(response => {
         console.log('promise fulfilled')
         setPersons(response.data)
@@ -62,6 +58,11 @@ const App = () => {
         id: persons.length + 1, // eslint-disable-next-line
         number: number
       }
+      // store new person locally and on the local server
+      axios
+        .post(baseURL, newPerson)
+        .then(response =>
+          console.log(response))
       setPersons(persons.concat(newPerson))
     }
   }
