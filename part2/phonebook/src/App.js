@@ -1,21 +1,41 @@
-/* eslint no-use-before-define: 0 */ // --> OFF
+/* eslint-disable */ 
 import { useEffect, useState } from 'react'
 import personService from './services/persons'
 
 const ShowPerson = (props) => {
   const searchTerm = props.searchTerm
   const persons = props.persons
+  const setPersons = props.setPersons
+
+  const removePerson = (id) => {
+    return () => {
+      if (confirm(`Are you sure you want to delete this contact? `)) {
+          personService
+              .remove(id)
+              .then(response => console.log(response.data))
+            setPersons(personService.getAll())
+
+      }
+     }
+  }
+
   if (searchTerm === undefined) {
     return persons.map((person) => {
-      return (<li key={person.id}>{person.name} {person.number}</li>)
+      return (<li key={person.id}>{person.name} {person.number}
+        <button onClick={removePerson(person.id)} >delete</button></li>)
     })
   } else {
-    const searchedList = persons.filter((person) =>
-    { return person.name.includes(props.searchTerm)
-    });
+      if (persons === undefined) {
+        return (<p> Nothing found </p>)
+      }
+      const searchedList = persons.filter((person) =>
+        { return person.name.includes(props.searchTerm)
+      });
+
       console.log(searchedList)
       return searchedList.map( (searched) => {
-        return (<li key={searched.id}>{searched.name} {searched.number}</li>)
+        return (<li key={searched.id}>{searched.name} {searched.number}
+          <button onClick={removePerson(searched.id)} >delete</button></li>)
     })
   }
 }
@@ -52,7 +72,6 @@ const App = () => {
     } else {
       const newPerson = {
         name: newName,
-        id: persons.length + 1, // eslint-disable-next-line
         number: number
       }
       // store new person locally and on the local server
@@ -90,7 +109,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ShowPerson
-        searchTerm={searchTerm} persons={persons}
+        searchTerm={searchTerm} persons={persons} setPersons={setPersons}
       />
     </div>
   )
