@@ -1,6 +1,6 @@
 /* eslint no-use-before-define: 0 */ // --> OFF
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 
 const ShowPerson = (props) => {
   const searchTerm = props.searchTerm
@@ -35,15 +35,12 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [number, setPhoneNumber] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
-  const baseURL = 'http://localhost:3001/persons'
 
   useEffect(() => {
-    axios
-      .get(baseURL)
+    personService
+      .getAll()
       .then(response => {
-        console.log('promise fulfilled')
         setPersons(response.data)
-        console.log(persons)
       })
   })
 
@@ -59,8 +56,8 @@ const App = () => {
         number: number
       }
       // store new person locally and on the local server
-      axios
-        .post(baseURL, newPerson)
+      personService
+        .create(newPerson)
         .then(response =>
           console.log(response))
       setPersons(persons.concat(newPerson))
