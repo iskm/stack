@@ -50,11 +50,24 @@ const Filter = (props) => {
   )
 }
 
+// create component to display error messages
+const Notification = ({message}) => {
+  if (message === null)
+    return null
+
+  return (
+    <div className='error'>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [number, setPhoneNumber] = useState('')
   const [searchTerm, setSearchTerm] = useState('')
+  const [errorMessage, setErrorMessage] = useState(`error error error`)
 
   useEffect(() => {
     personService
@@ -75,6 +88,8 @@ const App = () => {
         number: number
       }
       // store new person locally and on the local server
+      setErrorMessage(`Added ${newName}`)
+      setTimeout(() => setErrorMessage('All good'), 5000)
       personService
         .create(newPerson)
         .then(response =>
@@ -96,6 +111,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} />
       <Filter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <h2> add new contact </h2>
       <form onSubmit={addContact}>
