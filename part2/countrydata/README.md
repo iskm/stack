@@ -4,4 +4,4 @@ pulled from https://restcountries.com/#endpoints-all via its REST API
 
 # Example use
 ![example use](./example_use.png)
-<img src='./example_use.png' style='border-radius: 5px;'/>
+<!--<img src='./example_use.png' style='border-radius: 5px;'/>-->
