@@ -94,6 +94,10 @@ const App = () => {
         .create(newPerson)
         .then(response =>
           console.log(response))
+        .catch(error => {
+          console.log(error.response.data.error)
+          setErrorMessage(error.response.data.error)
+        })
       setPersons(persons.concat(newPerson))
     }
   }
