@@ -13,7 +13,7 @@ const blogSchema = new mongoose.Schema({
 const Blog = mongoose.model('Blog', blogSchema)
 
 console.log("Connecting to mongo server")
-const mongoUrl = 'mongodb+srv://imkusa:Ukj3Ks51qPJ2aa8w@cluster0.aookaoo.mongodb.net/?retryWrites=true&w=majority'
+const mongoUrl = 'mongodb+srv://imkusa:<Password>@cluster0.aookaoo.mongodb.net/?retryWrites=true&w=majority'
 mongoose.connect(mongoUrl)
 console.log("Successfully connected to mongo server")
 
